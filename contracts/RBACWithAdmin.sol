@@ -13,7 +13,7 @@ contract RBACWithAdmin is RBAC {
   /**
    * A constant role name for indicating admins.
    */
-  string public constant ROLE_ADMIN = "admin";
+  bytes32 public constant ROLE_ADMIN = keccak256("admin");
 
   /**
    * @dev modifier to scope access to admins
@@ -28,9 +28,7 @@ contract RBACWithAdmin is RBAC {
   /**
    * @dev constructor. Sets msg.sender as admin by default
    */
-  function RBACWithAdmin()
-    public
-  {
+  constructor() public {
     addRole(msg.sender, ROLE_ADMIN);
   }
 
@@ -39,7 +37,7 @@ contract RBACWithAdmin is RBAC {
    * @param addr address
    * @param roleName the name of the role
    */
-  function adminAddRole(address addr, string roleName)
+  function adminAddRole(address addr, bytes32 roleName)
     onlyAdmin
     public
   {
@@ -51,7 +49,7 @@ contract RBACWithAdmin is RBAC {
    * @param addr address
    * @param roleName the name of the role
    */
-  function adminRemoveRole(address addr, string roleName)
+  function adminRemoveRole(address addr, bytes32 roleName)
     onlyAdmin
     public
   {

@@ -9,18 +9,16 @@ import "./Roles.sol";
  * @dev Stores and provides setters and getters for roles and addresses.
  * @dev Supports unlimited numbers of roles and addresses.
  * @dev See //contracts/mocks/RBACMock.sol for an example of usage.
- * This RBAC method uses strings to key roles. It may be beneficial
- *  for you to write your own implementation of this interface using Enums or similar.
- * It's also recommended that you define constants in the contract, like ROLE_ADMIN below,
- *  to avoid typos.
+ * This RBAC method uses bytes32s to key roles.
+ * It's recommended that you define constants in the contract, like ROLE_ADMIN below, to avoid typos.
  */
 contract RBAC {
   using Roles for Roles.Role;
 
-  mapping (string => Roles.Role) private roles;
+  mapping (bytes32 => Roles.Role) private roles;
 
-  event RoleAdded(address addr, string roleName);
-  event RoleRemoved(address addr, string roleName);
+  event RoleAdded(address addr, bytes32 roleName);
+  event RoleRemoved(address addr, bytes32 roleName);
 
   /**
    * @dev reverts if addr does not have role
@@ -28,7 +26,7 @@ contract RBAC {
    * @param roleName the name of the role
    * // reverts
    */
-  function checkRole(address addr, string roleName)
+  function checkRole(address addr, bytes32 roleName)
     view
     public
   {
@@ -41,7 +39,7 @@ contract RBAC {
    * @param roleName the name of the role
    * @return bool
    */
-  function hasRole(address addr, string roleName)
+  function hasRole(address addr, bytes32 roleName)
     view
     public
     returns (bool)
@@ -54,7 +52,7 @@ contract RBAC {
    * @param addr address
    * @param roleName the name of the role
    */
-  function addRole(address addr, string roleName)
+  function addRole(address addr, bytes32 roleName)
     internal
   {
     roles[roleName].add(addr);
@@ -66,7 +64,7 @@ contract RBAC {
    * @param addr address
    * @param roleName the name of the role
    */
-  function removeRole(address addr, string roleName)
+  function removeRole(address addr, bytes32 roleName)
     internal
   {
     roles[roleName].remove(addr);
@@ -78,8 +76,7 @@ contract RBAC {
    * @param roleName the name of the role
    * // reverts
    */
-  modifier onlyRole(string roleName)
-  {
+  modifier onlyRole(bytes32 roleName) {
     checkRole(msg.sender, roleName);
     _;
   }
@@ -87,22 +84,18 @@ contract RBAC {
   /**
    * @dev modifier to scope access to a set of roles (uses msg.sender as addr)
    * @param roleNames the names of the roles to scope access to
-   * // reverts
-   *
-   * @TODO - when solidity supports dynamic arrays as arguments to modifiers, provide this
-   *  see: https://github.com/ethereum/solidity/issues/2467
    */
-  // modifier onlyRoles(string[] roleNames) {
-  //     bool hasAnyRole = false;
-  //     for (uint8 i = 0; i < roleNames.length; i++) {
-  //         if (hasRole(msg.sender, roleNames[i])) {
-  //             hasAnyRole = true;
-  //             break;
-  //         }
-  //     }
+  modifier onlyRoles(bytes32[] roleNames) {
+    bool hasAnyRole = false;
+    for (uint8 i = 0; i < roleNames.length; i++) {
+        if (hasRole(msg.sender, roleNames[i])) {
+            hasAnyRole = true;
+            break;
+        }
+    }
 
-  //     require(hasAnyRole);
+    require(hasAnyRole);
 
-  //     _;
-  // }
+    _;
+  }
 }

@@ -1,4 +1,4 @@
-pragma solidity ^0.4.18;
+pragma solidity ^0.4.21;
 
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "openzeppelin-solidity/contracts/ECRecovery.sol";
@@ -24,7 +24,7 @@ import "../RBAC.sol";
 contract SignatureBouncer is Ownable, RBAC {
   using ECRecovery for bytes32;
 
-  string public constant ROLE_BOUNCER = "bouncer";
+  bytes32 public constant ROLE_BOUNCER = keccak256("bouncer");
 
   /**
    * @dev requires that a valid signature of a bouncer was provided
