@@ -88,10 +88,10 @@ contract RBAC {
   modifier onlyRoles(bytes32[] roleNames) {
     bool hasAnyRole = false;
     for (uint8 i = 0; i < roleNames.length; i++) {
-        if (hasRole(msg.sender, roleNames[i])) {
-            hasAnyRole = true;
-            break;
-        }
+      if (hasRole(msg.sender, roleNames[i])) {
+        hasAnyRole = true;
+        break;
+      }
     }
 
     require(hasAnyRole);

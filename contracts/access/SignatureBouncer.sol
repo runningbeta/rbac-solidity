@@ -4,6 +4,7 @@ import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "openzeppelin-solidity/contracts/ECRecovery.sol";
 import "../RBAC.sol";
 
+
 /**
  * @title SignatureBouncer
  * @author PhABC and Shrugs
