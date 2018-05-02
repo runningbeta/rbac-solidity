@@ -1,6 +1,6 @@
 {
   "name": "@runningbeta/rbac-solidity",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "RBAC (Role-Based Access Control) based on openzeppelin-solidity but using bytes32 type for roles",
   "directories": {
     "test": "test"
