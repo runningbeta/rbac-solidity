@@ -1,6 +1,6 @@
 {
   "name": "@runningbeta/rbac-solidity",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "RBAC (Role-Based Access Control) based on openzeppelin-solidity but using bytes32 type for roles",
   "directories": {
     "test": "test"
@@ -51,6 +51,7 @@
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "chai-bignumber": "^2.0.2",
+    "ethereumjs-util": "^5.2.0",
     "ethjs-abi": "^0.2.1",
     "solium": "^1.1.6",
     "truffle": "^4.1.7",
